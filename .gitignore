@@ -13,14 +13,24 @@ gen
 /public/index.php
 /public/FIRST_INSTALL
 
-# fileadmin: Caches & Editor-Uploads raus, Schutz-htaccess drin
+# fileadmin: Caches und Editor-Uploads raus, Standard-Schutzdateien
+# aus den TYPO3-Folder-Structure-Templates drin
 /public/fileadmin/_processed_/
-/public/fileadmin/_temp_/
+/public/fileadmin/_temp_/*
+!/public/fileadmin/_temp_/.htaccess
+!/public/fileadmin/_temp_/index.html
 /public/fileadmin/user_upload/*
+!/public/fileadmin/user_upload/index.html
 !/public/fileadmin/user_upload/_temp_/
 /public/fileadmin/user_upload/_temp_/*
+!/public/fileadmin/user_upload/_temp_/index.html
 !/public/fileadmin/user_upload/_temp_/importexport/
 !/public/fileadmin/user_upload/_temp_/importexport/.htaccess
+!/public/fileadmin/user_upload/_temp_/importexport/index.html
+
+# Theme-Demo-Bilder (Camino) gehören nicht ins Schulungs-Repo —
+# kommen aus typo3/theme-camino bzw. werden bei Bedarf neu importiert
+/public/fileadmin/camino/
 
 # IIS-Konfiguration für dieses Projekt nicht relevant
 /public/web.config
