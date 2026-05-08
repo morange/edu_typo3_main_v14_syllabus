@@ -5,6 +5,12 @@ des TYPO3 Education-Teams). Neueste Einträge stehen oben.
 
 ## 2026-05-08
 
+- `config/system/additional.php` ergänzt — DDEV-generierte Dev-Overrides
+  (DB-Verbindung zu `db`-Host, ImageMagick-Pfade, Mailpit-Transport,
+  `trustedHostsPattern`, `devIPmask`, `displayErrors`). Hinweis: Datei
+  trägt einen `#ddev-generated`-Marker und kann von DDEV überschrieben
+  werden — projektspezifische Anpassungen besser in `settings.php` oder
+  einem eigenen Include.
 - `.gitignore` und `public/fileadmin/`: Tracking neu sortiert — Camino-
   Theme-Demobilder (`fileadmin/camino/`) wieder aus Git entfernt
   (Projektentscheidung: nicht im Schulungs-Repo); dafür die noch
