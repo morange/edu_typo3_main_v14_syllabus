@@ -5,6 +5,12 @@ des TYPO3 Education-Teams). Neueste Einträge stehen oben.
 
 ## 2026-05-08
 
+- `.gitignore` und `public/fileadmin/`: Tracking neu sortiert — Camino-
+  Theme-Demobilder (`fileadmin/camino/`) wieder aus Git entfernt
+  (Projektentscheidung: nicht im Schulungs-Repo); dafür die noch
+  fehlenden Standard-Schutzdateien aus den TYPO3-Folder-Structure-
+  Templates aufgenommen (`_temp_/.htaccess`, `_temp_/index.html`,
+  `user_upload/index.html`, `user_upload/_temp_/index.html`).
 - TYPO3-Install-Artefakte ergänzt: `config/system/settings.php` (Globale
   TYPO3-Konfiguration nach Install-Wizard) und `config/sites/camino/config.yaml`
   (Site-Konfiguration der Camino-Demo-Site).
