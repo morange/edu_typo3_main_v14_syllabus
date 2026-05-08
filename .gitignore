@@ -3,16 +3,28 @@
 out
 gen
 
+# TYPO3: generierte / transiente Pfade unterhalb von public/
 /public/_assets/
-/public/fileadmin/user_upload/
-/public/fileadmin/_temp_/
-/public/fileadmin/_processed_/
+/public/_assets_install/
+/public/typo3temp/
+/public/typo3/*
 
+# Composer-Installer Drop-ins
+/public/index.php
 /public/FIRST_INSTALL
 
+# fileadmin: Caches & Editor-Uploads raus, Schutz-htaccess drin
+/public/fileadmin/_processed_/
+/public/fileadmin/_temp_/
+/public/fileadmin/user_upload/*
+!/public/fileadmin/user_upload/_temp_/
+/public/fileadmin/user_upload/_temp_/*
+!/public/fileadmin/user_upload/_temp_/importexport/
+!/public/fileadmin/user_upload/_temp_/importexport/.htaccess
+
+# IIS-Konfiguration für dieses Projekt nicht relevant
+/public/web.config
 
 /var/*
 !/var/labels
 /vendor/*
-/public/index.php
-/public/typo3/*
