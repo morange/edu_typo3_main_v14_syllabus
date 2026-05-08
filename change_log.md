@@ -5,6 +5,13 @@ des TYPO3 Education-Teams). Neueste Einträge stehen oben.
 
 ## 2026-05-08
 
+- TYPO3-Install-Artefakte ergänzt: `config/system/settings.php` (Globale
+  TYPO3-Konfiguration nach Install-Wizard) und `config/sites/camino/config.yaml`
+  (Site-Konfiguration der Camino-Demo-Site).
+- `public/fileadmin/`: Folder-Structure-Schutzdateien (`.htaccess`,
+  `_temp_/`, `user_upload/_temp_/importexport/.htaccess` über Negation)
+  sowie die Demo-Bilder des Camino-Themes (`fileadmin/camino/*.webp`)
+  ergänzt.
 - `.gitignore`: an die TYPO3-v14-Install-Struktur angepasst — `public/_assets_install/`,
   `public/typo3temp/` und `public/web.config` (IIS irrelevant) ergänzt; gezielte
   Negation für `public/fileadmin/user_upload/_temp_/importexport/.htaccess`,
