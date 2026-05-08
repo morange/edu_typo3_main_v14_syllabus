@@ -26,14 +26,14 @@ Jeder Eintrag bekommt einen eigenen Abschnitt nach folgendem Muster:
 
 ### Status-Kennzeichnungen
 
-| Status        | Bedeutung                                                       |
-|---------------|-----------------------------------------------------------------|
-| `OFFEN`       | Problem besteht, noch nicht analysiert                          |
-| `ANALYSE`     | wird gerade untersucht                                          |
-| `BLOCKIERT`   | wartet auf externe Klärung (Core-Bug, Drittextension, Infra)    |
-| `WORKAROUND`  | umgangen, eigentliche Ursache bleibt offen                      |
-| `BEHOBEN`     | gefixt — Eintrag bleibt zur Doku stehen                         |
-| `WONTFIX`     | bewusst nicht behoben (mit Begründung)                          |
+| Status       | Bedeutung                                                       |
+|--------------|-----------------------------------------------------------------|
+| `OPEN`       | Problem besteht, noch nicht analysiert                          |
+| `ANALYSE`    | wird gerade untersucht                                          |
+| `BLOCKED`    | wartet auf externe Klärung (Core-Bug, Drittextension, Infra)    |
+| `WORKAROUND` | umgangen, eigentliche Ursache bleibt offen                      |
+| `FIXED`      | gefixt — Eintrag bleibt zur Doku stehen                         |
+| `WONTFIX`    | bewusst nicht behoben (mit Begründung)                          |
 
 Behobene Einträge werden **nicht gelöscht**, sondern auf `BEHOBEN` umgesetzt
 und mit Datum & Commit-/PR-Referenz ergänzt — so bleibt der Verlauf sichtbar.
