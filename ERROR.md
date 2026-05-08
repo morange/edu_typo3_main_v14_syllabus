@@ -44,7 +44,130 @@ und mit Datum & Commit-/PR-Referenz ergänzt — so bleibt der Verlauf sichtbar.
 
 <!-- Hier neue Einträge oben einfügen. -->
 
-_(noch keine Einträge)_
+## [OFFEN] `public/typo3temp/var/.htaccess` aus Install-Template nicht angelegt
+
+- **Datum:**     2026-05-07
+- **Bereich:**   Install / Folder-Structure-Templates (`EXT:install`)
+- **TYPO3:**     14.3.x
+- **Umgebung:**  DDEV lokal (`name: edu-syllabus-v14`)
+- **URL/Pfad:**  `public/typo3temp/var/.htaccess` (Soll-Pfad)
+- **Schritte:**
+  1. Frische Installation per Install-Wizard.
+  2. Prüfen, welche `.htaccess`-Dateien unterhalb von `public/` platziert wurden:
+     ```
+     find public -name ".htaccess"
+     ```
+- **Erwartet:**  Alle in
+                 `vendor/typo3/cms-install/Resources/Private/FolderStructureTemplateFiles/`
+                 hinterlegten Templates sind in ihren Zielverzeichnissen
+                 vorhanden — insbesondere
+                 `typo3temp-var-htaccess` → `public/typo3temp/var/.htaccess`.
+- **Tatsächlich:** `public/typo3temp/var/` existiert nach dem Setup noch nicht;
+                 entsprechend fehlt auch die Schutz-`.htaccess` darin. Andere
+                 Folder-Structure-Targets sind dagegen platziert
+                 (`public/.htaccess`, `public/fileadmin/.htaccess`,
+                 `public/fileadmin/_temp_/.htaccess`,
+                 `public/fileadmin/user_upload/_temp_/importexport/.htaccess`).
+
+### Hintergrund: `.htaccess` aus dem Install-Ordner
+
+TYPO3 verwaltet Schutz-`.htaccess`-Dateien zentral als *Folder Structure
+Templates*:
+
+```
+vendor/typo3/cms-install/Resources/Private/FolderStructureTemplateFiles/
+  ├── root-htaccess                                 → public/.htaccess
+  ├── root-web-config                               → public/web.config (IIS)
+  ├── resources-root-htaccess                       → Resources Root
+  ├── fileadmin-temp-htaccess                       → public/fileadmin/_temp_/.htaccess
+  ├── fileadmin-temp-index.html                     → public/fileadmin/_temp_/index.html
+  ├── fileadmin-user_upload-temp-importexport-htaccess
+  │                                                 → public/fileadmin/user_upload/_temp_/importexport/.htaccess
+  └── typo3temp-var-htaccess                        → public/typo3temp/var/.htaccess   ⟵ FEHLT
+```
+
+Die Platzierung erfolgt durch den *Folder Structure*-Check des Install-Tools
+bzw. den CLI-Befehl
+`vendor/bin/typo3 install:fixfolderstructure` (TYPO3 v14).
+
+### Lösung / Workaround
+
+1. Im Install-Tool unter
+   *Maintenance → Folder Structure / Directory Structure*
+   den „Fix“-Button ausführen — TYPO3 legt fehlende Verzeichnisse und
+   Template-Dateien an.
+2. Alternativ per CLI:
+   ```bash
+   ddev exec vendor/bin/typo3 install:fixfolderstructure
+   ```
+3. Manuell — falls beides nicht greift:
+   ```bash
+   mkdir -p public/typo3temp/var
+   cp vendor/typo3/cms-install/Resources/Private/FolderStructureTemplateFiles/typo3temp-var-htaccess \
+      public/typo3temp/var/.htaccess
+   ```
+
+- **Notiz:**     `public/typo3temp/var/` enthält Caches, Logs und kompilierte
+                 Artefakte; die `.htaccess` sperrt direkten Web-Zugriff darauf.
+                 Solange das Verzeichnis ungeschützt ist, sollten dort keine
+                 sensiblen Daten liegen — der Fix ist also nicht rein
+                 kosmetisch.
+
+---
+
+## [BEHOBEN] `public/.htaccess` versehentlich im falschen Commit gelandet
+
+- **Datum:**     2026-05-07
+- **Bereich:**   Repo-Hygiene / Initial-Setup
+- **TYPO3:**     14.3.x
+- **Umgebung:**  DDEV lokal
+- **URL/Pfad:**  `public/.htaccess`
+- **Schritte:**
+  1. Install-Wizard ausführen → TYPO3 platziert `public/.htaccess`.
+  2. Datei wurde manuell mit `git add` gestaged.
+  3. Anschließender `git commit` mit eigentlich fokussiertem Inhalt
+     (`[TASK] Document trustedHostsPattern issue in ERROR.md`)
+     hat die `.htaccess` ungewollt mitgenommen
+     (Commit `1137610`).
+- **Erwartet:**  `public/.htaccess` als eigener Commit, themenrein.
+- **Tatsächlich:** `.htaccess` (382 Zeilen) im selben Commit wie eine
+                 reine Doku-Änderung — Commit-Granularität schlechter,
+                 spätere Bisects / Reviews schwerer lesbar.
+
+### Hintergrund / Quelle der Datei
+
+`public/.htaccess` ist eine 1:1-Kopie des Install-Templates
+
+```
+vendor/typo3/cms-install/Resources/Private/FolderStructureTemplateFiles/root-htaccess
+```
+
+und enthält u. a.:
+
+- Default-Regeln zur URL-Rewriting-Aktivierung (`RewriteEngine On`).
+- Schutz von Konfigurations- und sensiblen Dateien
+  (`composer.json`, `composer.lock`, `*.bak`, `.git*` …).
+- Caching- und Compression-Header (`mod_deflate`, `mod_expires`).
+- Zugriffsschutz für interne Pfade.
+
+Die Datei muss versioniert sein, weil sie sicherheitsrelevant ist und
+ein Deployment-Schritt sie nicht zwingend wieder herstellt.
+
+### Lehre / Vorgehen ab jetzt
+
+- **Vor jedem Commit `git status` prüfen** und gezielt mit
+  `git add <datei>` einzelne Pfade stagen, statt `git add .` /
+  `git add -A` zu verwenden.
+- TYPO3-Setup-Artefakte (`public/.htaccess`, `public/index.php`,
+  `config/system/*.php`, `public/fileadmin/.htaccess` …) gehören in
+  einen eigenen, klar benannten Commit
+  (z. B. `[TASK] Add TYPO3 install artifacts`), getrennt von Doku-
+  oder Code-Änderungen.
+
+- **Notiz:**     Da der Commit lokal noch nicht gepusht ist, könnte er
+                 per `git reset HEAD~1` aufgesplittet werden. Aktuell
+                 belassen — Eintrag dient als Referenz, falls künftig
+                 ein vergleichbarer Mix-Commit auftritt.
 
 ---
 
