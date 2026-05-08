@@ -1,4 +1,20 @@
 {
+    "name": "typo3-edu/syllabus-v14",
+    "description": "TYPO3 v14 syllabus reference installation for the TYPO3 Education team",
+    "license": "GPL-2.0-or-later",
+    "type": "project",
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "platform": {
+            "php": "8.5"
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
     "require": {
         "typo3/cms-adminpanel": "^14.3",
         "typo3/cms-backend": "^14.3",
@@ -36,5 +52,10 @@
         "typo3/cms-webhooks": "^14.3",
         "typo3/cms-workspaces": "^14.3",
         "typo3/minimal": "^14"
+    },
+    "extra": {
+        "typo3/cms": {
+            "web-dir": "public"
+        }
     }
 }
