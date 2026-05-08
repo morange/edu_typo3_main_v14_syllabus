@@ -5,6 +5,17 @@ des TYPO3 Education-Teams). Neueste Einträge stehen oben.
 
 ## 2026-05-08
 
+- `.gitignore`: an die TYPO3-v14-Install-Struktur angepasst — `public/_assets_install/`,
+  `public/typo3temp/` und `public/web.config` (IIS irrelevant) ergänzt; gezielte
+  Negation für `public/fileadmin/user_upload/_temp_/importexport/.htaccess`,
+  damit die Schutzdatei trackbar bleibt.
+- `composer.json`: doppelten `config`-Block bereinigt, projektspezifische
+  `name`/`description` (`typo3-edu/syllabus-v14`) gesetzt und
+  `extra.typo3/cms.web-dir = "public"` ergänzt.
+- `composer.lock`: Content-Hash an aktualisierte `composer.json` angeglichen.
+- `ERROR.md`: Status-Kennzeichnungen in der Legende auf englische Begriffe
+  (`OPEN`, `ANALYSE`, `BLOCKED`, `WORKAROUND`, `FIXED`, `WONTFIX`)
+  vereinheitlicht.
 - `ERROR.md`: zwei Einträge zur `.htaccess`-Situation ergänzt:
   - `[OFFEN]` Fehlende `public/typo3temp/var/.htaccess` aus dem Install-
     Template `vendor/typo3/cms-install/.../typo3temp-var-htaccess` — inkl.
