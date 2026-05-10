@@ -1,7 +1,7 @@
 <?php
 return [
     'BE' => [
-        'debug' => false,
+        'debug' => true,
         'installToolPassword' => '$argon2i$v=19$m=65536,t=16,p=1$WW4uVktHaFZTOVRjWUZoVA$Ye/ZmRX8hRrZKatWmdQ6cDuz8mCcaeXDtkbUl76ThC4',
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
@@ -69,7 +69,7 @@ return [
         'cacheHash' => [
             'enforceValidation' => true,
         ],
-        'debug' => false,
+        'debug' => true,
         'disableNoCacheParameter' => true,
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
@@ -89,7 +89,7 @@ return [
                     'writerConfiguration' => [
                         'notice' => [
                             'TYPO3\CMS\Core\Log\Writer\FileWriter' => [
-                                'disabled' => true,
+                                'disabled' => false,
                             ],
                         ],
                     ],
@@ -106,7 +106,7 @@ return [
         'transport_smtp_username' => '',
     ],
     'SYS' => [
-        'UTF8filesystem' => true,
+        'UTF8filesystem' => false,
         'caching' => [
             'cacheConfigurations' => [
                 'hash' => [
@@ -126,10 +126,10 @@ return [
                 ],
             ],
         ],
-        'devIPmask' => '',
-        'displayErrors' => 0,
+        'devIPmask' => '*',
+        'displayErrors' => 1,
         'encryptionKey' => 'e0881834ddaaa73b951b8c99add2ce67ebc7e1c9e597108879b014d20d3f9078070ccff216771bf2c482e60b0d067de2',
-        'exceptionalErrors' => 4096,
+        'exceptionalErrors' => 12290,
         'features' => [
             'frontend.cache.autoTagging' => true,
             'security.system.enforceAllowedFileExtensions' => true,
@@ -138,6 +138,6 @@ return [
         'systemMaintainers' => [
             1,
         ],
-		'trustedHostsPattern' => '.*\.ddev\.site',
+        'trustedHostsPattern' => '.*\\.ddev\\.site',
     ],
 ];
